@@ -1,12 +1,16 @@
 // Assignment code here 
+var upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+var specialChars = "!'#$%&()*+,-./:;<=>?@[\]^_`{|}~ ";
+var allNumbers = '0123456789';
+var allChars = [upperCase,lowerCase,specialChars,allNumbers];
+var arrayLength = allChars.length;
 
 
 
-// var arrayLength1 = allConfirm.length  
 
-// console.log(allConfirm)
 
-// console.log(arrayLength1) 
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
@@ -27,45 +31,50 @@ generateBtn.addEventListener("click", writePassword);
 
 
 function generatePassword(){
-  var upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var lowerCase = 'abcdefghijklmnopqrstuvwxyz';
-  var specialChars = "!'#$%&()*+,-./:;<=>?@[\]^_`{|}~ ";
-  var allNumbers = '0123456789';
-  var allChars = [upperCase,lowerCase,specialChars,allNumbers];
-  var arrayLength = allChars.length;
-  var upperConfirm = confirm('Do you want the password to contain upper case letters?')
-  var lowerConfirm = confirm('Do you want the password to contain lower case letters?')
-  var specialConfirm = confirm('Do you want the password to contain special characters?')
-  var numConfirm =  confirm('Do you want the password to contain numbers?')
-  var allConfirm = [upperConfirm,lowerConfirm,specialConfirm,numConfirm]
-  console.log(allChars.slice(1,3))
-  console.log(allChars.slice(1,2))
-  console.log(allChars.slice(0,1))
-  console.log(allChars.slice(0,2))
-  console.log(allChars.slice(0,3))
-  console.log(allChars.slice(0,4))
-  
+  var passwordLength = prompt("How many characters would you like your password to be?");
 
+  if (passwordLength < 8 || passwordLength > 128 ) {
+    alert('Password must be between 8 and 128 characters');
+    generatePassword();
+  }
+
+  var upperConfirm = confirm('Do you want the password to contain upper case letters?');
+  console.log(upperConfirm);
+  var lowerConfirm = confirm('Do you want the password to contain lower case letters?');
+  var specialConfirm = confirm('Do you want the password to contain special characters?');
+  var numConfirm =  confirm('Do you want the password to contain numbers?');
+  var masterChar = ""
+
+  if (upperConfirm) {
+    masterChar += upperCase
+  };
+
+  if (lowerConfirm) {
+    masterChar += lowerCase
+  };
+
+  if (specialConfirm) {
+    masterChar += specialChars
+  };
+
+  if (numConfirm) {
+    masterChar += allNumbers
+    
+  };
+
+  masterChar = masterChar.split("")
+  console.log(masterChar)
+
+  var password = ""
+
+  for (let i = 0; i < passwordLength; i++) {
+    var randomIndex = Math.floor(Math.random() * masterChar.length);
+    var randomCharacter = masterChar[randomIndex];
+    password += randomCharacter;
+  }
+
+console.log(password)
  
   
-    if (allConfirm[0,3] === true) {
-      return (allChars.slice(0,4))
-    } 
-    else if (allConfirm[0,2] === true){
-      return (allChars.slice(0,3));
-      
-      
-    }
-    else if (allConfirm[0,1] === true){
-      return (allChars.slice(0,2));
-    }
-
-    else if (allConfirm[0] === true){
-      return (allChars.slice(0,1));
-    }
-
-    else{ 
-      return('No user confirmation received');
-    }  
-
-}
+  return password;
+};
